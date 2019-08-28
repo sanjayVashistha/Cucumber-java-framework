@@ -14,6 +14,6 @@ public class PageObjectHandler {
 	}
 	
 	public LoginPage getLoginPage(){
-		return (login ==null) ? login = new LoginPage(driver) : login;
+		return (login==null) ? login = new LoginPage(driver) : login;
 	}
 }

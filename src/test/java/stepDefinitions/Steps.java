@@ -1,12 +1,9 @@
 package stepDefinitions;
 
-import java.util.concurrent.TimeUnit;
-
 import managers.PageObjectHandler;
+import managers.WebDriverHandler;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -18,18 +15,16 @@ public class Steps {
 	WebDriver driver;
 	LoginPage login;
 	PageObjectHandler pageObjectHandler;
-	ConfigReader configFileReader;
+	WebDriverHandler driverHandler;
+	//ConfigReader configFileReader;
 	
 	@Given("User is on Login Page.")
 	public void user_is_on_Login_Page() {
-		configFileReader= new ConfigReader();
-		System.setProperty("webdriver.chrome.driver", configFileReader.getDriverPath());
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
+		driverHandler = new WebDriverHandler();
+		driver = driverHandler.getDriver();
 		pageObjectHandler = new PageObjectHandler(driver);
 		login = pageObjectHandler.getLoginPage();
-		login.navigate_to(driver, configFileReader.getApplicationUrl());
+		login.navigate_to(driver, ConfigReader.getInstance().getApplicationUrl());
 	    //throw new cucumber.api.PendingException();
 	}
 
@@ -53,7 +48,7 @@ public class Steps {
 
 	@Then("User is logged in Successfully.")
 	public void user_is_logged_in_Successfully() {
-	    driver.quit();
+		driverHandler.closeDriver();
 	}
 
 }
