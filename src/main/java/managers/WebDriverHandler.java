@@ -36,20 +36,12 @@ public class WebDriverHandler {
 		String driverPath = configFileReader.getDriverPath();
 		Boolean maximizeWindow = configFileReader.getWindowMaximize();
 		if(browserName==null || browserName.equalsIgnoreCase("Chrome")){
-			if(driverPath.contains("chromedriver.exe")){
-				System.setProperty(CHROME_DRIVER_PROPERTY, driverPath);
-				driver = new ChromeDriver();
-			}
-			else
-				throw new RuntimeException("Chrome Driver Path not specified correctly in configuration.properties file");
+			System.setProperty(CHROME_DRIVER_PROPERTY, driverPath+"chromedriver.exe");
+			driver = new ChromeDriver();
 		}
 		else if(browserName.equalsIgnoreCase("firefox")){
-			if(driverPath.contains("GeckoDriver.exe")){
-				System.setProperty(FIREFOX_DRIVER_PROPERTY, driverPath);
-				driver = new FirefoxDriver();
-			}
-			else
-				throw new RuntimeException("Gecko Driver Path not specified correctly in configuration.properties file");
+			System.setProperty(FIREFOX_DRIVER_PROPERTY, driverPath+"geckodriver.exe");
+			driver = new FirefoxDriver();
 		}
 		else
 			throw new RuntimeException("The driver for "+browserName+" is not currently supported by the framwork. Update WebDriverHandler.createNormalDriver() method to support it.");

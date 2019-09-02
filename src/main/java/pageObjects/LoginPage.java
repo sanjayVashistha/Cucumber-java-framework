@@ -12,13 +12,13 @@ public class LoginPage {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(how = How.ID, using = "#username")
+	@FindBy(how = How.ID, using = "username")
 	private WebElement textBox_userName;
 	
-	@FindBy(how = How.ID, using = "#password")
+	@FindBy(how = How.ID, using = "password")
 	private WebElement textBox_password;
 	
-	@FindBy(how = How.ID, using = "#Login")
+	@FindBy(how = How.ID, using = "Login")
 	private WebElement button_Login;
 	
 	public void enter_userName(String userName){

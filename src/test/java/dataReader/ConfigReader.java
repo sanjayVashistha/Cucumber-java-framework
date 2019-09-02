@@ -35,9 +35,7 @@ public class ConfigReader {
 		return reader;
 	}
 	public String getDriverPath(){
-		String driverPath = properties.getProperty("driverPath");
-		if(driverPath!= null) return driverPath;
-		else throw new RuntimeException("driverPath not specified in the Configuration.properties file.");		
+		return System.getProperty("user.dir")+"\\lib\\";		
 	}
 	
 	public long getImplicitlyWait() {		
