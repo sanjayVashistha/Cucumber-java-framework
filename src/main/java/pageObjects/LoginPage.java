@@ -12,13 +12,13 @@ public class LoginPage {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(how = How.ID, using = "username")
-	private WebElement textBox_userName;
+	@FindBy(how = How.XPATH, using = "//input[@id = 'username' or @id = 'okta-signin-username']")
+	private WebElement textBox_userName; //For octa login locator id will be ''
 	
-	@FindBy(how = How.ID, using = "password")
+	@FindBy(how = How.XPATH, using = "//input[@id = password or @id = 'okta-signin-password']")
 	private WebElement textBox_password;
 	
-	@FindBy(how = How.ID, using = "Login")
+	@FindBy(how = How.XPATH, using = "//input[@id = 'Login' or @id='okta-signin-submit']")
 	private WebElement button_Login;
 	
 	public void enter_userName(String userName){
