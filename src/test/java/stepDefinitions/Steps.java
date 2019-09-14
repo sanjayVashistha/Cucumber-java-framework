@@ -14,12 +14,14 @@ import cucumber.api.java.en.When;
 import dataReader.ConfigReader;
 import pageObjects.LoginPage;
 import pageObjects.OpportunityPage;
+import pageObjects.TSMCRequestPage;
 
 public class Steps {
 	
 	 WebDriver driver;
 	 LoginPage login;
 	 OpportunityPage opp;
+	 TSMCRequestPage tsmcRequest;
 	 PageObjectHandler pageObjectHandler;
 	 WebDriverHandler driverHandler;
 	 World world;
@@ -66,8 +68,10 @@ public class Steps {
 	@Given("User is logged in to Salesforce as SV User")
 	public void user_is_logged_in_to_Salesforce_as() {
 		user_is_on_Login_Page();
-		user_enters_username("testusertest@test.com");
-		user_enters_password("welcome@1");
+		user_enters_username("internalcossupportadmin@cadence.com");
+		user_enters_password("Cdns1234");
+//		user_enters_username("testusertest@test.com");
+//		user_enters_password("welcome@1");
 		user_clicks_on_Login_button();
 	}
 	
@@ -77,7 +81,14 @@ public class Steps {
 		opp.clickGoButton();
 		
 	}
-	
+
+	@And("Go to TSMC Request page")
+	public void go_to_tsmc_request(){
+		SFHelper.goToTab(driver, "TSMC Request");
+		tsmcRequest.clickGoButton();
+		
+	}
+
 	@When("Click on Edit Button")
 	public void click_on_edit_button(){
 		opp.clickListViewQuickIcon();
