@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.LoginPage;
 import pageObjects.OpportunityPage;
 import pageObjects.TSMCRequestPage;
+import pageObjects.UserDetailPage;
 
 public class PageObjectHandler {
 	
@@ -12,6 +13,7 @@ public class PageObjectHandler {
 	private LoginPage login;
 	private OpportunityPage opp;
 	private TSMCRequestPage tsmcRequest;
+	private UserDetailPage userDetail;
 	
 	public PageObjectHandler(WebDriver driver){
 		this.driver = driver;
@@ -27,5 +29,9 @@ public class PageObjectHandler {
 	
 	public TSMCRequestPage getTSMCRequestPage(){
 		return (tsmcRequest==null) ? tsmcRequest = new TSMCRequestPage(driver) : tsmcRequest;
+	}
+	
+	public UserDetailPage getUserDetailPage(){
+		return (userDetail==null) ? userDetail = new UserDetailPage(driver) : userDetail;
 	}
 }

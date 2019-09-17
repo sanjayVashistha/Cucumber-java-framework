@@ -2,14 +2,26 @@ package stepDefinitions;
 
 import java.io.IOException;
 
+import org.openqa.selenium.WebDriver;
+
 import com.sforce.async.AsyncApiException;
 import com.sforce.ws.ConnectionException;
 
 import integrationHelpers.SFBulkIntegrator;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import helpers.World;
 
 public class Hooks {
+	WebDriver driver;
+	World world;
+	
+	public Hooks(World world) 
+	{
+		 this.world = world;
+		 driver = world.getWebDriverHandler().getDriver();
+		 System.out.println("Driver- "+ driver);
+	}
 	
 	@Before
 	public void beforeScenario() throws AsyncApiException, ConnectionException, IOException{
@@ -22,6 +34,10 @@ public class Hooks {
 		/*WebDriverHandler handler = new WebDriverHandler();
 		handler.getDriver();
 		handler.closeDriver();*/
+		world.getWebDriverHandler().getDriver().close();
 	}
+	
+	
+	
 
 }
