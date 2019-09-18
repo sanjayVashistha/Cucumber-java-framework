@@ -70,8 +70,7 @@ public class SFIntegrator {
 			            SObject[] records = qResult.getRecords();
 			            for (int i = 0; i < records.length; ++i) {
 			               SObject object = records[i];
-			               Object id = object.getId();
-			               ids[i] = (String) id;
+			               ids[i] = object.getId();
 			            }
 			            if (qResult.isDone()) {
 			               done = true;
@@ -89,6 +88,35 @@ public class SFIntegrator {
 			   return ids;
 			}
 		
+		  public String queryFieldById(String sObject,String fieldAPIName, String id) {
+			   QueryResult qResult = null;
+			   String value = null;
+			   try {
+			      String soqlQuery = "SELECT " + fieldAPIName + " FROM " + sObject + " WHERE Id :='" + id + "'";
+			      qResult = connection.query(soqlQuery);
+			      boolean done = false;
+			      if (qResult.getSize() > 0) {
+			         System.out.println("Logged-in user can see a total of "
+			            + qResult.getSize() + " " + sObject + " records.");
+			         while (!done) {
+			            SObject[] records = qResult.getRecords();
+			            SObject object = records[0];
+			            value = (String) object.getField(fieldAPIName);
+			            if (qResult.isDone()) {
+			               done = true;
+			            } else {
+			               qResult = connection.queryMore(qResult.getQueryLocator());
+			            }
+			         }
+			      } else {
+			         System.out.println("No records found.");
+			      }
+			      System.out.println("\nQuery succesfully executed.");
+			   } catch (ConnectionException ce) {
+			      ce.printStackTrace();
+			   }
+			   return value;
+			}
 		 /**
 		 * Create the PartnerConnection used to call API operations.
 		 * @throws FileNotFoundException 

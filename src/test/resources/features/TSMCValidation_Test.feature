@@ -1,5 +1,16 @@
 Feature: Check TSMC Validations
 
+	Scenario: Create a TSMC Record and Submit for Approval
+		Given User is logged in to Salesforce as SV User
+    And Go to TSMC Request page
+    And I click on New button
+    When I enter TSMC Request details as below
+    | Purpose |	ProcessNode |	Employee Type  |	User                | EDA Tool IP Name |	Support Type  	   |  Permitted Purpose    | Field Sales AE    |	Office Site |	Detailed Job Description |	Remark_   |
+    | EDA     |	7nm	        | Employee       | Pushkar Anil Upadhye |	Test1	           | Product development |	Test2	               | No                |  Brazil      | Test3                    |  Test4     |
+    And I click on Save button
+    Then I click on Submit for Approval button
+    Then Verify Approval History Status is "Pending"
+
   Scenario: Verify validations on TSMC records
     Given User is logged in to Salesforce as SV User
     And Go to TSMC Request page
@@ -22,6 +33,6 @@ Feature: Check TSMC Validations
     When Open "TSMC-00018748" record from the Record List View
     And Click Link "Adnan Assar" to Open Record
     Then Go To User Detail Page
-		And Click on Login Button
+  	And Click on Login Button
      
     

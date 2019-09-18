@@ -79,6 +79,24 @@ public class TSMCRequestPage extends BasePage{
 	@FindBy(how = How.XPATH, using = "//*[text()='Remark']/../following-sibling::td/textarea")
 	private WebElement textarea_remark;
 	
+	@FindBy(how = How.XPATH, using = "//div[contains(.,'Approval History')][contains(@class,'bRelatedList')]//span[@class='extraStatus']")
+	private WebElement relatedlist_approvalHistoryStatus;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(.,'Approval History')][contains(@class,'bRelatedList')]//a[text()='Approve / Reject']")
+	private WebElement link_approvalHistoryApproveReject;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(.,'Approval History')][contains(@class,'bRelatedList')]//a[text()='Reassign']")
+	private WebElement link_approvalHistoryReassign;
+	
+	@FindBy(how = How.CSS, using = "#Comments")
+	private WebElement textarea_approvalHistoryComments;
+	
+	@FindBy(how = How.XPATH, using = "//input[@name='goNext']")
+	private WebElement button_approvalHistoryApprove;
+	
+	@FindBy(how = How.XPATH, using = "//input[@name='Reject']")
+	private WebElement button_approvalHistoryReject;
+	
 	
 	//***********Error Message Selectors*******//
 	
@@ -138,6 +156,10 @@ public class TSMCRequestPage extends BasePage{
 		click(button_go);
 	}
 	
+	public void clickSubmitForApprovalButton(){
+		click(button_submitForApproval);
+	}
+	
 	public void selectPurpose(String purpose) {
 		selectPicklist(picklist_purpose, purpose);
 	}
@@ -185,6 +207,10 @@ public class TSMCRequestPage extends BasePage{
 	public String getTSMCFieldValue(String fieldName) {
 		String selector = String.format(field_value_xpath, fieldName);
 		return getTextByXpath(selector);
+	}
+	
+	public void assertApprovalHistoryStatus(String status) {
+		assertValue(status, relatedlist_approvalHistoryStatus.getText());
 	}
 	
 	public void assertErrorMessageOnPurposeField() {
