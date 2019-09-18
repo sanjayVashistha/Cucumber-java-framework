@@ -14,12 +14,14 @@ import cucumber.api.java.en.When;
 import dataReader.ConfigReader;
 import pageObjects.LoginPage;
 import pageObjects.OpportunityPage;
+import pageObjects.TSMCRequestPage;
 
 public class Steps {
 	
 	 WebDriver driver;
 	 LoginPage login;
 	 OpportunityPage opp;
+	 TSMCRequestPage tsmcRequest;
 	 PageObjectHandler pageObjectHandler;
 	 WebDriverHandler driverHandler;
 	 World world;
@@ -29,6 +31,7 @@ public class Steps {
 	 this.world = world;
 	 login = world.getPageObjectHandler().getLoginPage();
 	 opp = world.getPageObjectHandler().getOpportunityPage();
+	 tsmcRequest = world.getPageObjectHandler().getTSMCRequestPage();
 	 driver = world.getWebDriverHandler().getDriver();
 	 System.out.println("Login- "+ login);
 	 System.out.println("Driver- "+ driver);
@@ -66,8 +69,10 @@ public class Steps {
 	@Given("User is logged in to Salesforce as SV User")
 	public void user_is_logged_in_to_Salesforce_as() {
 		user_is_on_Login_Page();
-		user_enters_username("testusertest@test.com");
-		user_enters_password("welcome@1");
+		user_enters_username("internalcossupportadmin@cadence.com");
+		user_enters_password("Cdns1234");
+//		user_enters_username("testusertest@test.com");
+//		user_enters_password("welcome@1");
 		user_clicks_on_Login_button();
 	}
 	
@@ -77,7 +82,19 @@ public class Steps {
 		opp.clickGoButton();
 		
 	}
-	
+
+	@And("Go to TSMC Request page")
+	public void go_to_tsmc_request(){
+		SFHelper.goToTab(driver, "TSMC Request");
+		//tsmcRequest.clickGoButton();
+	}
+
+	@When("Click on New Button")
+	public void click_on_new_button()
+	{
+		tsmcRequest.clickNewButton();
+	}
+
 	@When("Click on Edit Button")
 	public void click_on_edit_button(){
 		opp.clickListViewQuickIcon();
@@ -97,4 +114,57 @@ public class Steps {
 		driver.quit();
 	}
 
+	@And("Click on Save Button for TSMC record")
+	public void click_save_button_on_tsmc_page()
+	{
+		tsmcRequest.clickSaveButton();
+	}
+	
+	@Then("Verify Error Message on Purpose Field")
+	public void verify_error_message_on_purpose_field()
+	{
+		tsmcRequest.assertErrorMessageOnPurposeField();
+	}
+	
+	@Then("Verify Error Message on Employee Type Field")
+	public void verify_error_message_on_employee_type_field()
+	{
+		tsmcRequest.assertErrorMessageOnEmployeeTypeField();
+	}
+	
+	@Then("Verify Error Message on EDA Tool,IP Name,DS project and customer Field")
+	public void verify_error_message_on_eda_tool_ip_name_ds_project_and_customer_field()
+	{
+		tsmcRequest.assertErrorMessageOnEdaToolIPNameDSProjectandCustomerField();
+	}
+
+	@Then("Verify Error Message on Permitted Purpose Field")
+	public void assertErrorMessageOnPermittedPurposeField()
+	{
+		tsmcRequest.assertErrorMessageOnPermittedPurposeField();
+	}
+
+	@Then("Verify Error Message on Physical Location Field")
+	public void verify_error_message_on_physical_location_field()
+	{
+		tsmcRequest.assertErrorMessageOnPhysicalLocationField();
+	}
+	
+	@Then("Verify Error Message on Detailed Job Description Field")
+	public void verify_error_message_on_detailed_job_description_field()
+	{
+		tsmcRequest.assertErrorMessageOnDetailedJobDescriptionField();
+	}
+	
+	@Then("Verify Error Message on User Field")
+	public void verify_error_message_on_user_field()
+	{
+		tsmcRequest.assertErrorMessageOnUserField();
+	}
+	
+	@Then("Verify Error Message on Support Type Field")
+	public void verify_error_message_on_Support_Type_field()
+	{
+		tsmcRequest.assertErrorMessageOnSupportTypeField();
+	}
 }
