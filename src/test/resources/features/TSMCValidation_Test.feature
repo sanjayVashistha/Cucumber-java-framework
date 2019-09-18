@@ -3,9 +3,8 @@ Feature: Check TSMC Validations
 	Scenario: Create a TSMC Record and Submit for Approval
 		Given User is logged in to Salesforce as SV User
     And Go to TSMC Request page
-    And I click on New button
     When I enter TSMC Request details as below
-    | Purpose |	ProcessNode |	Employee Type  |	User                | EDA Tool IP Name |	Support Type  	   |  Permitted Purpose    | Field Sales AE    |	Office Site |	Detailed Job Description |	Remark_   |
+    | Purpose |	ProcessNode |	Employee Type  |	User                | EDA Tool IP Name |	Support Type  	   |  Permitted Purpose    | Field Sales AE    |	Office Site |	Detailed Job Description |	Remark   |
     | EDA     |	7nm	        | Employee       | Pushkar Anil Upadhye |	Test1	           | Product development |	Test2	               | No                |  Brazil      | Test3                    |  Test4     |
     And I click on Save button
     Then I click on Submit for Approval button
