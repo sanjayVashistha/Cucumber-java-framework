@@ -69,8 +69,8 @@ public class Steps {
 	@Given("User is logged in to Salesforce as SV User")
 	public void user_is_logged_in_to_Salesforce_as() {
 		user_is_on_Login_Page();
-		user_enters_username("internalcossupportadmin@cadence.com");
-		user_enters_password("Cdns1234");
+		user_enters_username(ConfigReader.getInstance().getSFUsername());
+		user_enters_password(ConfigReader.getInstance().getSFPassword());
 //		user_enters_username("testusertest@test.com");
 //		user_enters_password("welcome@1");
 		user_clicks_on_Login_button();

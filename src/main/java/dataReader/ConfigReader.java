@@ -66,4 +66,16 @@ public class ConfigReader {
 		if(runOnSauceLab!=null) return Boolean.valueOf(runOnSauceLab);
 		else throw new RuntimeException("runOnSauceLab property not specified in the Configuration.properties file.");
 	}
+	
+	public String getSFUsername(){
+		String sfUsername = properties.getProperty("sfUsername");
+		if(sfUsername!=null) return sfUsername;
+		else throw new RuntimeException("SFUsername property not specified in the Configuration.properties file.");
+	}
+	
+	public String getSFPassword(){
+		String sfPassword = properties.getProperty("sfPassword");
+		if(sfPassword!=null) return sfPassword;
+		else throw new RuntimeException("SFPassword property not specified in the Configuration.properties file.");
+	}
 }
