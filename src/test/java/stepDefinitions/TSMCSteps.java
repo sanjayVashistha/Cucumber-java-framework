@@ -62,8 +62,6 @@ public class TSMCSteps {
 		tsmcRequest.selectPhysicalLocation(list.get(0).get("Office Site"));
 		tsmcRequest.setJobDescription(list.get(0).get("Detailed Job Description"));
 		tsmcRequest.setRemark(list.get(0).get("Remark"));
-		
-		tsmcRequest.clickSaveButton();
 	}
 	
 	@And("I click on New button")

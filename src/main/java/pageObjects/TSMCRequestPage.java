@@ -158,6 +158,7 @@ public class TSMCRequestPage extends BasePage{
 	
 	public void clickSubmitForApprovalButton(){
 		click(button_submitForApproval);
+		acceptAlert();
 	}
 	
 	public void selectPurpose(String purpose) {

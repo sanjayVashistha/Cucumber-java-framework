@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,12 @@ public class BasePage {
 	 }
 	 public void click(WebElement locator) {
 		 locator.click();
+	 }
+
+	 public void acceptAlert()
+	 {
+		Alert confirmationAlert = driver.switchTo().alert();
+		confirmationAlert.accept();
 	 }
 	 
 	 public void type(WebElement locator, String input) {
