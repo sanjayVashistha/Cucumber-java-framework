@@ -8,19 +8,23 @@ import org.openqa.selenium.WebDriver;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import enums.Context;
 import helpers.SFHelper;
 import helpers.World;
+import managers.ScenarioContext;
 import pageObjects.TSMCRequestPage;
 
 public class TSMCSteps {
 	World world;
 	TSMCRequestPage tsmcRequest;
 	WebDriver driver;
+	ScenarioContext sc;
 	
 	 public TSMCSteps(World world) {
 		 this.world = world;
 		 tsmcRequest = world.getPageObjectHandler().getTSMCRequestPage();
 		 driver = world.getWebDriverHandler().getDriver();
+		 sc = world.getScenarioContext();
 	}
 	
 	@Then("Verify Error Message on {string} Field")
@@ -82,5 +86,12 @@ public class TSMCSteps {
 	@Then("^Verify Approval History Status is \"(.*)\"$")
 	public void verify_approval_history_status(String status) {
 		tsmcRequest.assertApprovalHistoryStatus(status);
+	}
+	
+	@And("Get the TSMCRecord Id and Save it")
+	public void get_the_tsmcrecord_id_and_save_it()
+	{
+		sc.setContext(Context.TSMC_RECORD_ID, tsmcRequest.getTSMCRecordId());
+		System.out.println(world.getScenarioContext().getContext(Context.TSMC_RECORD_ID));
 	}
 }

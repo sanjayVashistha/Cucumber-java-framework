@@ -7,6 +7,7 @@ Feature: Check TSMC Validations
     | Purpose |	ProcessNode |	Employee Type  |	User                | EDA Tool IP Name |	Support Type  	   |  Permitted Purpose    | Field Sales AE    |	Office Site |	Detailed Job Description |	Remark   |
     | EDA     |	7nm	        | Employee       | Adar Segal |	Test1	           | Product development |	Test2	               | No                |  Brazil      | Test3                    |  Test4     |
     And I click on Save button
+    And Get the TSMCRecord Id and Save it
     Then I click on Submit for Approval button
     Then Verify Approval History Status is "Pending"
 	Then Verify Status is "Pending For Approval"

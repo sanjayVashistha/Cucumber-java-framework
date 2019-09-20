@@ -29,6 +29,7 @@ Feature: Check TSMC Validations
     And Go to TSMC Request page
     And Click on Go Button on Record List View
     When Open "TSMC-00018748" record from the Record List View
+    And Get the TSMCRecord Id and Save it
     And Click Link "Adnan Assar" to Open Record
     Then Go To User Detail Page
   	And Click on Login Button

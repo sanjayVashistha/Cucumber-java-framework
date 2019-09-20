@@ -97,6 +97,8 @@ public class TSMCRequestPage extends BasePage{
 	@FindBy(how = How.XPATH, using = "//input[@name='Reject']")
 	private WebElement button_approvalHistoryReject;
 	
+	@FindBy(how = How.XPATH, using = "//h2[@class='pageDescription']")
+	private WebElement tsmc_record_id;
 	
 	//***********Error Message Selectors*******//
 	
@@ -185,6 +187,18 @@ public class TSMCRequestPage extends BasePage{
 		selectPicklist(picklist_fieldSalesAE, field);
 	}
 	
+	//======================================Getters======================================
+	public String getTSMCRecordId()
+	{
+		return tsmc_record_id.getText();
+	}
+	
+	public String getTSMCFieldValue(String fieldName) {
+		String selector = String.format(field_value_xpath, fieldName);
+		return getTextByXpath(selector);
+	}
+
+	//======================================Setters======================================
 	public void setUser(String user) {
 		type(textbox_user,user);
 	}
@@ -203,11 +217,6 @@ public class TSMCRequestPage extends BasePage{
 	
 	public void setRemark(String remark) {
 		type(textarea_remark,remark);
-	}
-	
-	public String getTSMCFieldValue(String fieldName) {
-		String selector = String.format(field_value_xpath, fieldName);
-		return getTextByXpath(selector);
 	}
 	
 	public void assertApprovalHistoryStatus(String status) {
