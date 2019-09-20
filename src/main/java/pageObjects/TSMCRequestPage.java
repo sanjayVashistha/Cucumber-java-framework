@@ -15,7 +15,8 @@ public class TSMCRequestPage extends BasePage{
 	
 	//*********************** Generic Xpaths ***************
 	public static String  error_message_below_fields = "//*[text()='%s']/ancestor::td[1]/following-sibling::td[1]//div[text()=' You must enter a value']";
-	public String  field_value_xpath = "//td[text()='%s']/following-sibling::td[1]/div";
+	public static String  field_value_xpath = "//td[text()='%s']/following-sibling::td[1]/div";
+	public static String  detail_page_field_value_xpath = "//td[text()='%s']/following-sibling::td[1]";
 
 	//**********Buttons Selector*************//
 	@FindBy(how = How.CSS, using = "div.filterOverview input[name=go]")
@@ -254,5 +255,10 @@ public class TSMCRequestPage extends BasePage{
 
 	public void assertErrorMessageOnSupportTypeField() {
 		assertValue("Error: You must enter a value", error_message_for_support_type_field.getText());
+	}
+	
+	public void assertFieldValue(String fieldXPath, String expectedValue)
+	{
+		assertValue(expectedValue, getTextByXpath(fieldXPath));
 	}
 }

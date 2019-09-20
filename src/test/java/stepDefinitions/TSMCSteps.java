@@ -41,7 +41,7 @@ public class TSMCSteps {
 	
 	@When("^Open \"(.*)\" record from the Record List View$")
 	public void open_record_from_the_Record_List_View(String recordName) {
-		SFHelper.click_record_link_list_view(driver, recordName);
+		SFHelper.click_record_link_list_view(driver, String.valueOf(world.getScenarioContext().getContext(Context.TSMC_RECORD_ID)));
 	}
 	
 	@And("^Click Link \"(.*)\" to Open Record$")
@@ -93,5 +93,10 @@ public class TSMCSteps {
 	{
 		sc.setContext(Context.TSMC_RECORD_ID, tsmcRequest.getTSMCRecordId());
 		System.out.println(world.getScenarioContext().getContext(Context.TSMC_RECORD_ID));
+	}
+	
+	@Then("Verify Status is {\"(.*)\"")
+	public void verify_Status_is(String statusFieldValue) {
+		tsmcRequest.assertFieldValue(String.format(TSMCRequestPage.detail_page_field_value_xpath, "Status"), statusFieldValue);
 	}
 }
