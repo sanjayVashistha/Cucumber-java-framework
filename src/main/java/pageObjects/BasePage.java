@@ -2,15 +2,21 @@ package pageObjects;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 
 public class BasePage {
 	 private WebDriver driver;
-	 private String parentWindow;
+	 ArrayList<String> tabs;
 	 
 	 public BasePage(WebDriver driver) {
 		 this.driver = driver;
@@ -20,6 +26,8 @@ public class BasePage {
 		 driver.get(url);
 	 }
 	 public void click(WebElement locator) {
+		 WebDriverWait wait = new WebDriverWait(driver, 20);
+		 WebElement element = wait.until(ExpectedConditions.visibilityOf(locator));
 		 locator.click();
 	 }
 
@@ -51,8 +59,10 @@ public class BasePage {
 	 }
 	 
 	 public void openURLInNewTab(String URL) {
-		 parentWindow = driver.getWindowHandle();
-		 driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL+ "t");
+		 ((JavascriptExecutor) driver).executeScript("window.open('about:blank','_blank');");
+		 tabs = new ArrayList<String> (driver.getWindowHandles());
+		 System.out.println(tabs.size());
+		 driver.switchTo().window(tabs.get(1)); 
 		 driver.get(URL);
 	 }
 	 
@@ -61,7 +71,7 @@ public class BasePage {
 	 }
 	 
 	 public void closeCurrentTab(){
-		 driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
-		 driver.switchTo().window(parentWindow);
-	 }
+		 driver.findElement(By.tagName("body")).sendKeys(Keys.CONTROL + "w");
+		 driver.switchTo().window(tabs.get(0));	 
+     }
 }

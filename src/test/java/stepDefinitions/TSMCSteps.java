@@ -98,7 +98,7 @@ public class TSMCSteps {
 		System.out.println(world.getScenarioContext().getContext(Context.TSMC_RECORD_ID));
 	}
 	
-	@Then("Verify Status is {\"(.*)\"")
+	@Then("Verify Status is \"(.*)\"")
 	public void verify_Status_is(String statusFieldValue) {
 		tsmcRequest.assertFieldValue(String.format(TSMCRequestPage.detail_page_field_value_xpath, "Status"), statusFieldValue);
 	}
@@ -113,7 +113,7 @@ public class TSMCSteps {
 		echoSignPDF.clickNextButton();
 	}
 	
-	@Then("Enter Text {\"(.*)\" in the textfield in PDF")
+	@Then("Click and enter Text \"(.*)\" in the textfield in PDF")
 	public void enter_text_in_the_textfield_in_pdf(String text) {
 		echoSignPDF.setSignatureField(text);
 	}
@@ -133,8 +133,8 @@ public class TSMCSteps {
 		echoSignPDF.assertSuccessMessage((String) world.getScenarioContext().getContext(Context.TSMC_RECORD_ID));
 	}
 	
-	@And("Close EchoSign browser window")
-	public void close_echosign_browser_window() {
+	@Then("Close EchoSign browser tab")
+	public void close_EchoSign_browser_tab() {
 		echoSignPDF.closeCurentTab();
 	}
 }

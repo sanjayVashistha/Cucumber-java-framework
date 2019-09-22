@@ -13,9 +13,12 @@ public class EchoSignPDFPage extends BasePage{
 		PageFactory.initElements(driver, this);
 	}
 	
-	String success_message = " You have successfully signed the agreement \"%s Acknowledgement Letter\".";
+	String success_message = "You have successfully signed the agreement “%s Acknowledgement Letter”.";
 	//**********Buttons Selector*************//
-	@FindBy(how = How.CSS, using = ".popover")
+	@FindBy(how = How.CSS, using = ".down")
+	private WebElement downButton;
+	
+	@FindBy(how = How.CSS, using = ".next")
 	private WebElement nextButton;
 	
 	@FindBy(how = How.CSS, using = ".apply")
@@ -25,7 +28,7 @@ public class EchoSignPDFPage extends BasePage{
 	private WebElement clictoesignButton;
 	
 	//**********Fields Selector*************//
-	@FindBy(how = How.CSS, using = ".faux_field")
+	@FindBy(how = How.CSS, using = ".todo-signature")
 	private WebElement textbox_sign;
 	
 	@FindBy(how = How.CSS, using = ".signature-type-name")
@@ -43,6 +46,7 @@ public class EchoSignPDFPage extends BasePage{
 	
 	public void clickNextButton()
 	{
+		click(downButton);
 		click(nextButton);
 	}
 	
@@ -59,7 +63,6 @@ public class EchoSignPDFPage extends BasePage{
 	public void setSignatureField(String signature)
 	{
 		click(textbox_sign);
-		click(textbox_signature);
 		type(textbox_signature,signature);
 	}
 	
