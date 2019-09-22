@@ -2,6 +2,7 @@ package managers;
 
 import org.openqa.selenium.WebDriver;
 
+import pageObjects.EchoSignPDFPage;
 import pageObjects.LoginPage;
 import pageObjects.OpportunityPage;
 import pageObjects.TSMCRequestPage;
@@ -14,6 +15,7 @@ public class PageObjectHandler {
 	private OpportunityPage opp;
 	private TSMCRequestPage tsmcRequest;
 	private UserDetailPage userDetail;
+	private EchoSignPDFPage echoSignPDF;
 	
 	public PageObjectHandler(WebDriver driver){
 		this.driver = driver;
@@ -33,5 +35,9 @@ public class PageObjectHandler {
 	
 	public UserDetailPage getUserDetailPage(){
 		return (userDetail==null) ? userDetail = new UserDetailPage(driver) : userDetail;
+	}
+	
+	public EchoSignPDFPage getEchoSignPDFPage(){
+		return (echoSignPDF==null) ? echoSignPDF = new EchoSignPDFPage(driver) : echoSignPDF;
 	}
 }

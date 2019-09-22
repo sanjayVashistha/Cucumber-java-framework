@@ -22,12 +22,13 @@ Feature: Check TSMC Validations
 	Then Click on Approve button
 	Then Verify Status is "Out For Signature"
 	Then Go to Gmail and Get the link of PDF for "TSMC-00018762"
-	Then Visit link landing to PDF
-	Then Click on the Start button in PDF
-	Then Click on Text box and New Box will appear in PDF
-	Then Enter Text "Approving Adar" in the textfield in PDF 
-	Then Click on "Apply" Button in PDF
-	Then Click on "Click to Sign" Button in PDF 
+	Then Visit EchoSign PDF link in the new tab
+	Then Click on the Next button in PDF
+	Then Click and enter Text "test user" in the textfield in PDF 
+	Then Click on Apply button in PDF
+	Then Click on Click to Sign button in PDF
+	Then Verify success message of signed PDF
+	And Close EchoSign browser tab
 	And Go to TSMC Request page
   And Click on Go Button on Record List View 
 	When Open "TSMC-00018748" record from the Record List View

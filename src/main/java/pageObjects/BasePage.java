@@ -2,6 +2,7 @@ package pageObjects;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class BasePage {
 	 private WebDriver driver;
+	 private String parentWindow;
 	 
 	 public BasePage(WebDriver driver) {
 		 this.driver = driver;
@@ -46,5 +48,20 @@ public class BasePage {
 	 
 	 public String getTextByXpath(String xpath) {
 		 return driver.findElement(By.xpath(xpath)).getText();
+	 }
+	 
+	 public void openURLInNewTab(String URL) {
+		 parentWindow = driver.getWindowHandle();
+		 driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL+ "t");
+		 driver.get(URL);
+	 }
+	 
+	 public void assertText(WebElement element, String text){
+		 assertEquals(text, element.getText());
+	 }
+	 
+	 public void closeCurrentTab(){
+		 driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
+		 driver.switchTo().window(parentWindow);
 	 }
 }

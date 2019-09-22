@@ -12,17 +12,20 @@ import enums.Context;
 import helpers.SFHelper;
 import helpers.World;
 import managers.ScenarioContext;
+import pageObjects.EchoSignPDFPage;
 import pageObjects.TSMCRequestPage;
 
 public class TSMCSteps {
 	World world;
 	TSMCRequestPage tsmcRequest;
+	EchoSignPDFPage echoSignPDF;
 	WebDriver driver;
 	ScenarioContext sc;
 	
 	 public TSMCSteps(World world) {
 		 this.world = world;
 		 tsmcRequest = world.getPageObjectHandler().getTSMCRequestPage();
+		 echoSignPDF = world.getPageObjectHandler().getEchoSignPDFPage();
 		 driver = world.getWebDriverHandler().getDriver();
 		 sc = world.getScenarioContext();
 	}
@@ -98,5 +101,40 @@ public class TSMCSteps {
 	@Then("Verify Status is {\"(.*)\"")
 	public void verify_Status_is(String statusFieldValue) {
 		tsmcRequest.assertFieldValue(String.format(TSMCRequestPage.detail_page_field_value_xpath, "Status"), statusFieldValue);
+	}
+	
+	@Then("Visit EchoSign PDF link in the new tab")
+	public void visit_echosign_pdf_link_in_the_new_tab() {
+		echoSignPDF.goToEchoSignPDF((String) world.getScenarioContext().getContext(Context.ECHOSIGN_PDF_LINK));
+	}
+	
+	@Then("Click on the Next button in PDF")
+	public void click_on_next_button_in_PDF() {
+		echoSignPDF.clickNextButton();
+	}
+	
+	@Then("Enter Text {\"(.*)\" in the textfield in PDF")
+	public void enter_text_in_the_textfield_in_pdf(String text) {
+		echoSignPDF.setSignatureField(text);
+	}
+	
+	@Then("Click on Apply button in PDF")
+	public void click_on_apply_button_in_PDF() {
+		echoSignPDF.clickApplyButton();
+	}
+	
+	@Then("Click on Click to Sign button in PDF")
+	public void click_on_click_to_sign_button_in_PDF() {
+		echoSignPDF.clickClickToEsignButton();
+	}
+	
+	@Then("Verify success message of signed PDF")
+	public void verify_success_message_of_signed_PDF() {
+		echoSignPDF.assertSuccessMessage((String) world.getScenarioContext().getContext(Context.TSMC_RECORD_ID));
+	}
+	
+	@And("Close EchoSign browser window")
+	public void close_echosign_browser_window() {
+		echoSignPDF.closeCurentTab();
 	}
 }

@@ -5,6 +5,8 @@ import com.sforce.soap.partner.Error;
 import com.sforce.soap.partner.sobject.*;
 import com.sforce.ws.*;
 import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Map;
     
 public class SFIntegrator {
 		static PartnerConnection connection;
@@ -12,12 +14,72 @@ public class SFIntegrator {
 		public static void main(String[] ids) throws FileNotFoundException {
 			SFIntegrator s = new SFIntegrator();
 			try {
-				connection = s.createConnection("USERNAME", "PASSWORDTOKEN", "https://test.salesforce.com");
+				connection = s.createConnection("USERNAME", "PASSWORD", "https://test.salesforce.com");
+				//s.createTSMCRecord();
+				//String acknowledgementNumber = s.queryFieldById("TSMC_Agreement__c","Name","ID");
+				//System.out.println(acknowledgementNumber);
 			} catch (ConnectionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		public String createTSMCRecord() {
+		    String result = null;
+		    try {
+		        // Create a new sObject of type Contact
+		           // and fill out its fields.
+		        SObject tsmc = new SObject();
+		        tsmc.setType("TSMC_Agreement__c");
+		        tsmc.setField("Purpose__c", "EDA");
+		        tsmc.setField("Process_Node__c", "7nm");
+		        tsmc.setField("Employee_Type__c", "Employee");
+		        tsmc.setField("User__c", "ID");
+		        tsmc.setField("EDA_Tool_IP_Name__c", "Test");
+		        tsmc.setField("Support_Type__c", "Product development");
+		        tsmc.setField("Permitted_Purpose__c", "test 2");
+		        tsmc.setField("Field_Sales_AE__c", "No");
+		        tsmc.setField("Office_Site__c", "Brazil");
+		        tsmc.setField("Detailed_Job_Description__c", "test 3");
+		        tsmc.setField("Remark__c", "test 4");
+		        
+		        // Add this sObject to an array 
+		        SObject[] tsmcRecords = new SObject[1];
+		        tsmcRecords[0] = tsmc;
+		        // Make a create call and pass it the array of sObjects
+		        SaveResult[] results = connection.create(tsmcRecords);
+		    
+		        // Iterate through the results list
+		        // and write the ID of the new sObject
+		        // or the errors if the object creation failed.
+		        // In this case, we only have one result
+		        // since we created one contact.
+		        for (int j = 0; j < results.length; j++) {
+		            if (results[j].isSuccess()) {
+		                result = results[j].getId();
+		                System.out.println(
+		                    "\nA TSMC Record was created with an ID of: " + result
+		                );
+		             } else {
+		                // There were errors during the create call,
+		                // go through the errors array and write
+		                // them to the console
+		                for (int i = 0; i < results[j].getErrors().length; i++) {
+		                    Error err = results[j].getErrors()[i];
+		                    System.out.println("Errors were found on item " + j);
+		                    System.out.println("Error code: " + 
+		                        err.getStatusCode().toString());
+		                    System.out.println("Error message: " + err.getMessage());
+		                }
+		             }
+		        }
+		    } catch (ConnectionException ce) {
+		        ce.printStackTrace();
+		    }
+		    return result;
+		}
+		
+		
 		public void deleteRecords(String sObject, String username, String password, String endpoint, String query) throws FileNotFoundException {
 			System.out.println("Deleting the records.....");
 			try {
@@ -92,7 +154,7 @@ public class SFIntegrator {
 			   QueryResult qResult = null;
 			   String value = null;
 			   try {
-			      String soqlQuery = "SELECT " + fieldAPIName + " FROM " + sObject + " WHERE Id :='" + id + "'";
+			      String soqlQuery = "SELECT " + fieldAPIName + " FROM " + sObject + " WHERE Id ='" + id + "'";
 			      qResult = connection.query(soqlQuery);
 			      boolean done = false;
 			      if (qResult.getSize() > 0) {
