@@ -167,4 +167,10 @@ public class Steps {
 	{
 		tsmcRequest.assertErrorMessageOnSupportTypeField();
 	}
+	
+	@Then("Go To \"(.*)\" from Global Search")
+	public void go_to_user_from_global_search(String user)
+	{
+		SFHelper.go_to_user_from_global_search(driver, user);
+	}
 }

@@ -44,6 +44,7 @@ public class TSMCSteps {
 	
 	@When("^Open \"(.*)\" record from the Record List View$")
 	public void open_record_from_the_Record_List_View(String recordName) {
+		tsmcRequest.sortListInDescendingOrder();
 		SFHelper.click_record_link_list_view(driver, String.valueOf(world.getScenarioContext().getContext(Context.TSMC_RECORD_ID)));
 	}
 	
@@ -136,5 +137,35 @@ public class TSMCSteps {
 	@Then("Close EchoSign browser tab")
 	public void close_EchoSign_browser_tab() {
 		echoSignPDF.closeCurentTab();
+	}
+	
+	@Then("Click on Approve link present in Approval History Related List")
+	public void click_on_approve_link_present_in_approval_history_related_list()
+	{
+		tsmcRequest.clickOnApproveLinkPresentInApprovalHistoryRelatedList();
+	}
+	
+	@Then("Click on Approve button")
+	public void click_on_approve_button()
+	{
+		tsmcRequest.clickApproveButton();
+	}
+	
+	@Then("Add Comment \"(.*)\"")
+	public void set_comments(String commentValue)
+	{
+		tsmcRequest.setComments(commentValue);
+	}
+	
+	@Then("Click on Complete button and handle Alert OK")
+	public void click_complete_button()
+	{
+		tsmcRequest.clickCompleteButton();
+	}
+	
+	@Then("Verify in Notes and Attachments that new attachment is added to record")
+	public void verify_in_notes_and_attachments_that_new_attachment_is_added_to_record()
+	{
+		
 	}
 }

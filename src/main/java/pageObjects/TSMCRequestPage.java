@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import helpers.SFHelper;
+
 public class TSMCRequestPage extends BasePage{
 	
 	public TSMCRequestPage(WebDriver driver){
@@ -39,6 +41,9 @@ public class TSMCRequestPage extends BasePage{
 	
 	@FindBy(how = How.NAME, using = "submit")
 	private WebElement button_submitForApproval;
+	
+	@FindBy(how = How.NAME, using = "complete_single")
+	private WebElement button_complete;
 	
 	//**********Edit Page Fields Selector*************//
 	@FindBy(how = How.ID, using = "fcf")
@@ -126,7 +131,12 @@ public class TSMCRequestPage extends BasePage{
 
 	@FindBy(how = How.XPATH, using = "//*[text()='Support Type']/ancestor::td[1]/following-sibling::td[1]//div[text()=' You must enter a value']")
 	private WebElement error_message_for_support_type_field;
+	
+	@FindBy(how = How.XPATH, using = "//td[contains(@class, 'x-grid3-hd x-grid3-cell x-grid3-td-NAME')]")
+	private WebElement sorting_field_in_record_list_view;
 
+	@FindBy(how = How.XPATH, using = "//h3[text()='Approval History']/ancestor::div[1]/following-sibling::div[1]//a[text()='Approve / Reject']")
+	private WebElement approve_reject_link;
 	
 	//**********Methods *******************//
 	
@@ -163,7 +173,12 @@ public class TSMCRequestPage extends BasePage{
 		click(button_submitForApproval);
 		acceptAlert();
 	}
-	
+
+	public void clickCompleteButton() {
+		click(button_complete);
+		acceptAlert();
+	}
+
 	public void selectPurpose(String purpose) {
 		selectPicklist(picklist_purpose, purpose);
 	}
@@ -188,6 +203,16 @@ public class TSMCRequestPage extends BasePage{
 		selectPicklist(picklist_fieldSalesAE, field);
 	}
 	
+	public void sortListInDescendingOrder()
+	{
+		String sortingClass = sorting_field_in_record_list_view.getCssValue("class");
+		if(sortingClass.contains("ASC")) {
+			sorting_field_in_record_list_view.click();
+			//SFHelper.wait_until_element_is_not_visible(driver, "waitingSearchDiv");
+			
+		}
+		
+	}
 	//======================================Getters======================================
 	public String getTSMCRecordId()
 	{
@@ -260,5 +285,19 @@ public class TSMCRequestPage extends BasePage{
 	public void assertFieldValue(String fieldXPath, String expectedValue)
 	{
 		assertValue(expectedValue, getTextByXpath(fieldXPath));
+	}
+
+	public void clickOnApproveLinkPresentInApprovalHistoryRelatedList() {
+		click(approve_reject_link);
+	}
+	
+	public void clickApproveButton()
+	{
+		click(button_approvalHistoryApprove);
+	}
+	
+	public void setComments(String commentValue)
+	{
+		textarea_approvalHistoryComments.sendKeys(commentValue);
 	}
 }
