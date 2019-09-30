@@ -15,7 +15,9 @@ public class SFIntegrator {
 			SFIntegrator s = new SFIntegrator();
 			try {
 				connection = s.createConnection("USERNAME", "PASSWORD", "https://test.salesforce.com");
-				//s.createTSMCRecord();
+				//String createdrecordid=s.createTSMCRecord();
+				String[] approverIds={"005d0000001T4Ft"};
+				s.processRecords(createdrecordid,approverIds);
 				//String acknowledgementNumber = s.queryFieldById("TSMC_Agreement__c","Name","ID");
 				//System.out.println(acknowledgementNumber);
 			} catch (ConnectionException e) {
@@ -78,6 +80,34 @@ public class SFIntegrator {
 		    }
 		    return result;
 		}
+		public void processRecords(String id, String[] approverIds) {
+			   ProcessSubmitRequest request = new ProcessSubmitRequest();
+			   request.setComments("Submit for approval process.");
+			   request.setObjectId(id);
+			   request.setNextApproverIds(approverIds);
+			   try {
+			      ProcessResult[] processResults = connection
+			            .process(new ProcessSubmitRequest[] { request });
+			      for (ProcessResult processResult : processResults) {
+			         if (processResult.isSuccess()) {
+			            System.out.println("Approval submitted for: " + id + ":");
+			            for (int i = 0; i < approverIds.length; i++) {
+			               System.out
+			                     .println("\tBy: " + approverIds[i] + " successful.");
+			            }
+			            System.out.println("Process Instance Status: "
+			                  + processResult.getInstanceStatus());
+			         } else {
+			            System.out.println("Approval submitted for: " + id
+			                  + ", approverIds: " + approverIds.toString() + " FAILED.");
+			            System.out.println("Error: "
+			                  + processResult.getErrors().toString());
+			         }
+			      }
+			   } catch (ConnectionException e) {
+			      e.printStackTrace();
+			   }
+			}
 		
 		
 		public void deleteRecords(String sObject, String username, String password, String endpoint, String query) throws FileNotFoundException {
