@@ -75,6 +75,12 @@ public class Steps {
 //		user_enters_password("welcome@1");
 		user_clicks_on_Login_button();
 	}
+
+	@And("Go to \"(.*)\" tab")
+	public void go_to_x_tab(String tabName)
+	{
+		SFHelper.goToTab(driver, tabName);
+	}
 	
 	@And("Go to Opportunity Test oppo3")
 	public void go_to_opportunity(){
