@@ -21,7 +21,7 @@ public class SFBulkIntegrator {
     /**
      * Creates a Bulk API job and uploads batches for a CSV file.
      */
-    public void createRecords(String sobjectType, String userName,
+    public Set<String> createRecords(String sobjectType, String userName,
               String password, String sampleFileName)
             throws AsyncApiException, ConnectionException, IOException {
         BulkConnection connection = getBulkConnection(userName, password);
@@ -30,7 +30,8 @@ public class SFBulkIntegrator {
             sampleFileName);
         closeJob(connection, job.getId());
         awaitCompletion(connection, job, batchInfoList);
-        checkResults(connection, job, batchInfoList);
+        Set<String> recordids=checkResults(connection, job, batchInfoList);
+        return recordids;
     }
 
 
@@ -38,10 +39,11 @@ public class SFBulkIntegrator {
     /**
      * Gets the results of the operation and checks for errors.
      */
-    private void checkResults(BulkConnection connection, JobInfo job,
+    private Set<String> checkResults(BulkConnection connection, JobInfo job,
               List<BatchInfo> batchInfoList)
             throws AsyncApiException, IOException {
         // batchInfoList was populated when batches were created and submitted
+    	Set<String> createdrecordids = new HashSet<String>();;
         for (BatchInfo b : batchInfoList) {
             CSVReader rdr =
               new CSVReader(connection.getBatchResultStream(job.getId(), b.getId()));
@@ -57,6 +59,7 @@ public class SFBulkIntegrator {
                 boolean success = Boolean.valueOf(resultInfo.get("Success"));
                 boolean created = Boolean.valueOf(resultInfo.get("Created"));
                 String id = resultInfo.get("Id");
+                createdrecordids.add(resultInfo.get("Id"));
                 String error = resultInfo.get("Error");
                 if (success && created) {
                     System.out.println("Created row with id " + id);
@@ -65,6 +68,7 @@ public class SFBulkIntegrator {
                 }
             }
         }
+        return createdrecordids;
     }
 
 
@@ -150,7 +154,7 @@ public class SFBulkIntegrator {
         ConnectorConfig partnerConfig = new ConnectorConfig();
         partnerConfig.setUsername(userName);
         partnerConfig.setPassword(password);
-        partnerConfig.setAuthEndpoint("https://login.salesforce.com/services/Soap/u/46.0");
+        partnerConfig.setAuthEndpoint("https://test.salesforce.com/services/Soap/u/46.0");
         // Creating the connection automatically handles login and stores
         // the session in partnerConfig
         new PartnerConnection(partnerConfig);
